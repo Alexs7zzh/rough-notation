@@ -1,6 +1,5 @@
 node_modules
 bin
 dist
-lib
 demo
 .DS_Store
