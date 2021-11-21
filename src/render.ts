@@ -1,4 +1,4 @@
-import { Rect, RoughAnnotationConfig, SVG_NS, FullPadding } from './model.js';
+import { Rect, RoughAnnotationConfig, SVG_NS, FullPadding } from './model';
 import { ResolvedOptions, OpSet } from 'roughjs/bin/core';
 import { line, rectangle } from 'roughjs/bin/renderer';
 

@@ -1,25 +1,17 @@
 import resolve from 'rollup-plugin-node-resolve';
 import { terser } from "rollup-plugin-terser";
+import typescript from '@rollup/plugin-typescript';
 
-const input = 'lib/rough-notation.js';
+const input = 'src/rough-notation.ts';
 
 export default [
-  {
-    input,
-    output: {
-      file: 'lib/rough-notation.iife.js',
-      format: 'iife',
-      name: 'RoughNotation'
-    },
-    plugins: [resolve(), terser()]
-  },
   {
     input,
     output: {
       file: 'lib/rough-notation.esm.js',
       format: 'esm'
     },
-    plugins: [resolve(), terser()]
+    plugins: [typescript(), resolve(), terser()]
   },
   {
     input,
@@ -27,6 +19,6 @@ export default [
       file: 'lib/rough-notation.cjs.js',
       format: 'cjs'
     },
-    plugins: [resolve(), terser()]
+    plugins: [typescript(), resolve(), terser()]
   },
 ];

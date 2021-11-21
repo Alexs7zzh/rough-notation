@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "module": "es2015",
+    "target": "es2020",
+    "module": "es2020",
     "moduleResolution": "node",
     "lib": [
-      "es2017",
+      "es2020",
       "dom"
     ],
     "declaration": true,
+    "declarationDir": "./lib",
+    "emitDeclarationOnly": true,
     "outDir": "./lib",
     "baseUrl": ".",
     "strict": true,
