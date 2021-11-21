@@ -59,7 +59,7 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
   let strokeWidth = config.strokeWidth || 2;
   const padding = parsePadding(config);
   const animate = (config.animate === undefined) ? true : (!!config.animate);
-  const iterations = config.iterations || 2;
+  const iterations = config.iterations || 1;
   const rtl = config.rtl ? 1 : 0;
   const o = getOptions('single', seed);
 
