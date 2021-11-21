@@ -1,7 +1,6 @@
-import { Rect, RoughAnnotationConfig, SVG_NS, FullPadding, BracketType } from './model.js';
+import { Rect, RoughAnnotationConfig, SVG_NS, FullPadding } from './model.js';
 import { ResolvedOptions, OpSet } from 'roughjs/bin/core';
-import { line, rectangle, ellipse, linearPath } from 'roughjs/bin/renderer';
-import { Point } from 'roughjs/bin/geometry';
+import { line, rectangle } from 'roughjs/bin/renderer';
 
 type RoughOptionsType = 'highlight' | 'single' | 'double';
 
@@ -22,7 +21,7 @@ function getOptions(type: RoughOptionsType, seed: number): ResolvedOptions {
     dashOffset: -1,
     dashGap: -1,
     zigzagOffset: -1,
-    combineNestedSvgPaths: false,
+    preserveVertices: false,
     disableMultiStroke: type !== 'double',
     disableMultiStrokeFill: false,
     seed
@@ -76,17 +75,6 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
       }
       break;
     }
-    case 'strike-through': {
-      const y = rect.y + (rect.h / 2);
-      for (let i = rtl; i < iterations + rtl; i++) {
-        if (i % 2) {
-          opList.push(line(rect.x + rect.w, y, rect.x, y, o));
-        } else {
-          opList.push(line(rect.x, y, rect.x + rect.w, y, o));
-        }
-      }
-      break;
-    }
     case 'box': {
       const x = rect.x - padding[3];
       const y = rect.y - padding[0];
@@ -94,104 +82,6 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
       const height = rect.h + (padding[0] + padding[2]);
       for (let i = 0; i < iterations; i++) {
         opList.push(rectangle(x, y, width, height, o));
-      }
-      break;
-    }
-    case 'bracket': {
-      const brackets: BracketType[] = Array.isArray(config.brackets) ? config.brackets : (config.brackets ? [config.brackets] : ['right']);
-      const lx = rect.x - padding[3] * 2;
-      const rx = rect.x + rect.w + padding[1] * 2;
-      const ty = rect.y - padding[0] * 2;
-      const by = rect.y + rect.h + padding[2] * 2;
-      for (const br of brackets) {
-        let points: Point[];
-        switch (br) {
-          case 'bottom':
-            points = [
-              [lx, rect.y + rect.h],
-              [lx, by],
-              [rx, by],
-              [rx, rect.y + rect.h]
-            ];
-            break;
-          case 'top':
-            points = [
-              [lx, rect.y],
-              [lx, ty],
-              [rx, ty],
-              [rx, rect.y]
-            ];
-            break;
-          case 'left':
-            points = [
-              [rect.x, ty],
-              [lx, ty],
-              [lx, by],
-              [rect.x, by]
-            ];
-            break;
-          case 'right':
-            points = [
-              [rect.x + rect.w, ty],
-              [rx, ty],
-              [rx, by],
-              [rect.x + rect.w, by]
-            ];
-            break;
-        }
-        if (points) {
-          opList.push(linearPath(points, false, o));
-        }
-      }
-      break;
-    }
-    case 'crossed-off': {
-      const x = rect.x;
-      const y = rect.y;
-      const x2 = x + rect.w;
-      const y2 = y + rect.h;
-      for (let i = rtl; i < iterations + rtl; i++) {
-        if (i % 2) {
-          opList.push(line(x2, y2, x, y, o));
-        } else {
-          opList.push(line(x, y, x2, y2, o));
-        }
-      }
-      for (let i = rtl; i < iterations + rtl; i++) {
-        if (i % 2) {
-          opList.push(line(x, y2, x2, y, o));
-        } else {
-          opList.push(line(x2, y, x, y2, o));
-        }
-      }
-      break;
-    }
-    case 'circle': {
-      const doubleO = getOptions('double', seed);
-      const width = rect.w + (padding[1] + padding[3]);
-      const height = rect.h + (padding[0] + padding[2]);
-      const x = rect.x - padding[3] + (width / 2);
-      const y = rect.y - padding[0] + (height / 2);
-      const fullItr = Math.floor(iterations / 2);
-      const singleItr = iterations - (fullItr * 2);
-      for (let i = 0; i < fullItr; i++) {
-        opList.push(ellipse(x, y, width, height, doubleO));
-      }
-      for (let i = 0; i < singleItr; i++) {
-        opList.push(ellipse(x, y, width, height, o));
-      }
-      break;
-    }
-    case 'highlight': {
-      const o = getOptions('highlight', seed);
-      strokeWidth = rect.h * 0.95;
-      const y = rect.y + (rect.h / 2);
-      for (let i = rtl; i < iterations + rtl; i++) {
-        if (i % 2) {
-          opList.push(line(rect.x + rect.w, y, rect.x, y, o));
-        } else {
-          opList.push(line(rect.x, y, rect.x + rect.w, y, o));
-        }
       }
       break;
     }
