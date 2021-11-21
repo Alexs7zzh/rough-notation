@@ -84,18 +84,10 @@ class RoughAnnotationImpl implements RoughAnnotation {
       style.pointerEvents = 'none';
       style.width = '100px';
       style.height = '100px';
-      const prepend = this._config.type === 'highlight';
-      this._e.insertAdjacentElement(prepend ? 'beforebegin' : 'afterend', svg);
+      // this._e.insertAdjacentElement(prepend ? 'beforebegin' : 'afterend', svg);
+      this._e.parentElement!.parentElement!.appendChild(svg);
       this._state = 'not-showing';
 
-      // ensure e is positioned
-      if (prepend) {
-        const computedPos = window.getComputedStyle(this._e).position;
-        const unpositioned = (!computedPos) || (computedPos === 'static');
-        if (unpositioned) {
-          this._e.style.position = 'relative';
-        }
-      }
       this.attachListeners();
     }
   }
