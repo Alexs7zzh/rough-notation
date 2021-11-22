@@ -1,5 +1,5 @@
 {
-  "name": "@alexs7zzh/rough-notation",
+  "name": "@alexs7/rough-notation",
   "version": "0.5.1",
   "description": "Create and animate hand-drawn annotations on a web page",
   "main": "lib/rough-notation.cjs.js",
