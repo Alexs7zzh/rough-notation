@@ -15,6 +15,7 @@ export interface RoughAnnotationConfig extends RoughAnnotationConfigBase {
     multiline?: boolean;
     rtl?: boolean;
     className?: string | undefined;
+    commentId?: string | undefined;
 }
 export interface RoughAnnotationConfigBase {
     animate?: boolean;

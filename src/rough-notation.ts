@@ -80,6 +80,7 @@ class RoughAnnotationImpl implements RoughAnnotation {
       ensureKeyframes();
       const svg = this._svg = document.createElementNS(SVG_NS, 'svg');
       svg.setAttribute('class', this.className);
+      if (this._config.commentId) svg.dataset.forComment = this._config.commentId
       const style = svg.style;
       style.position = 'absolute';
       style.top = '0';
@@ -88,7 +89,6 @@ class RoughAnnotationImpl implements RoughAnnotation {
       style.pointerEvents = 'none';
       style.width = '100px';
       style.height = '100px';
-      // this._e.insertAdjacentElement(prepend ? 'beforebegin' : 'afterend', svg);
       this._e.parentElement!.parentElement!.appendChild(svg);
       this._state = 'not-showing';
 
