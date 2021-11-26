@@ -41,6 +41,10 @@ class RoughAnnotationImpl implements RoughAnnotation {
     }
   }
 
+  get className() {
+    return this._config.className ? this._config.className : 'rough-annotation';
+  }
+
   get strokeWidth() { return this._config.strokeWidth; }
   set strokeWidth(value) {
     if (this._config.strokeWidth !== value) {
@@ -75,7 +79,7 @@ class RoughAnnotationImpl implements RoughAnnotation {
     if (this._state === 'unattached' && this._e.parentElement) {
       ensureKeyframes();
       const svg = this._svg = document.createElementNS(SVG_NS, 'svg');
-      svg.setAttribute('class', 'rough-annotation');
+      svg.setAttribute('class', this.className);
       const style = svg.style;
       style.position = 'absolute';
       style.top = '0';
