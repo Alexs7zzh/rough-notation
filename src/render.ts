@@ -1,13 +1,11 @@
-import { Rect, RoughAnnotationConfig, SVG_NS, FullPadding } from './model';
+import { Rect, RoughAnnotationConfig, SVG_NS, FullPadding, RoughAnnotationType } from './model';
 import { ResolvedOptions, OpSet } from 'roughjs/bin/core';
 import { line, rectangle } from 'roughjs/bin/renderer';
 
-type RoughOptionsType = 'highlight' | 'single' | 'double';
-
-function getOptions(type: RoughOptionsType, seed: number): ResolvedOptions {
+function getOptions(type: RoughAnnotationType, seed: number): ResolvedOptions {
   return {
     maxRandomnessOffset: 2,
-    roughness: type === 'highlight' ? 3 : 1.5,
+    roughness: type === 'underline' ? 5 : 1.5,
     bowing: 1,
     stroke: '#000',
     strokeWidth: 1.5,
@@ -22,7 +20,7 @@ function getOptions(type: RoughOptionsType, seed: number): ResolvedOptions {
     dashGap: -1,
     zigzagOffset: -1,
     preserveVertices: false,
-    disableMultiStroke: type !== 'double',
+    disableMultiStroke: true,
     disableMultiStrokeFill: false,
     seed
   };
@@ -61,7 +59,7 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
   const animate = (config.animate === undefined) ? true : (!!config.animate);
   const iterations = config.iterations || 1;
   const rtl = config.rtl ? 1 : 0;
-  const o = getOptions('single', seed);
+  const o = getOptions(config.type, seed);
 
   switch (config.type) {
     case 'underline': {
