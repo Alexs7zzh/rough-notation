@@ -5,7 +5,7 @@ import { line, rectangle } from 'roughjs/bin/renderer';
 function getOptions(type: RoughAnnotationType, seed: number): ResolvedOptions {
   return {
     maxRandomnessOffset: 2,
-    roughness: type === 'underline' ? 5 : 1.5,
+    roughness: type === 'underline' ? 2 : 1.5,
     bowing: 1,
     stroke: '#000',
     strokeWidth: 1.5,
