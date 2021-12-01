@@ -89,7 +89,10 @@ class RoughAnnotationImpl implements RoughAnnotation {
       style.pointerEvents = 'none';
       style.width = '100px';
       style.height = '100px';
-      this._e.parentElement!.parentElement!.appendChild(svg);
+      if (this._config.root)
+        this._config.root.appendChild(svg);
+      else
+        this._e.parentElement!.appendChild(svg);
       this._state = 'not-showing';
 
       this.attachListeners();

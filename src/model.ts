@@ -20,6 +20,7 @@ export interface RoughAnnotationConfig extends RoughAnnotationConfigBase {
   rtl?: boolean;
   className?: string|undefined
   commentId?: string|undefined
+  root?: HTMLElement
 }
 
 export interface RoughAnnotationConfigBase {
