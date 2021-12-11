@@ -11,7 +11,7 @@ export default [
       file: 'lib/rough-notation.esm.js',
       format: 'esm'
     },
-    plugins: [typescript(), resolve(), terser()]
+    plugins: [typescript(), resolve({ browser: true }), terser()]
   },
   {
     input,
@@ -19,6 +19,6 @@ export default [
       file: 'lib/rough-notation.cjs.js',
       format: 'cjs'
     },
-    plugins: [typescript(), resolve(), terser()]
+    plugins: [typescript(), resolve({ browser: true }), terser()]
   },
 ];
