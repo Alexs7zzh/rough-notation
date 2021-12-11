@@ -1,6 +1,6 @@
 {
   "name": "@alexs7/rough-notation",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Create and animate hand-drawn annotations on a web page",
   "main": "lib/rough-notation.cjs.js",
   "module": "lib/rough-notation.esm.js",
@@ -23,6 +23,7 @@
   "license": "MIT",
   "homepage": "https://github.com/Alexs7zzh/rough-notation#readme",
   "devDependencies": {
+    "@rollup/plugin-replace": "^3.0.0",
     "@rollup/plugin-typescript": "^8.3.0",
     "rollup": "^2.61.1",
     "rollup-plugin-node-resolve": "^5.2.0",
