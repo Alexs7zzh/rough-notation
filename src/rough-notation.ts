@@ -192,4 +192,8 @@ class RoughAnnotationGroupImpl implements RoughAnnotationGroup {
   }
 }
 
-export default RoughAnnotationGroupImpl;
+export function main(): RoughAnnotationGroup {
+  return new RoughAnnotationGroupImpl();
+}
+
+export default main
