@@ -9,11 +9,8 @@ export interface Rect {
 export declare type RoughAnnotationType = 'underline' | 'box';
 export declare type FullPadding = [number, number, number, number];
 export declare type RoughPadding = number | [number, number] | FullPadding;
-export declare type BracketType = 'left' | 'right' | 'top' | 'bottom';
 export interface RoughAnnotationConfig extends RoughAnnotationConfigBase {
     type: RoughAnnotationType;
-    multiline?: boolean;
-    rtl?: boolean;
     className?: string | undefined;
     commentId?: string | undefined;
     rootId?: string | undefined;
@@ -25,15 +22,13 @@ export interface RoughAnnotationConfigBase {
     strokeWidth?: number;
     padding?: RoughPadding;
     iterations?: number;
-    brackets?: BracketType | BracketType[];
 }
 export interface RoughAnnotation extends RoughAnnotationConfigBase {
-    isShowing(): boolean;
     show(): void;
-    hide(): void;
     remove(): void;
+    refresh(): void;
 }
 export interface RoughAnnotationGroup {
-    show(): void;
-    hide(): void;
+    add(e: HTMLElement, config: RoughAnnotationConfig): string;
+    remove(id: string): void;
 }

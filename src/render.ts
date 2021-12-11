@@ -58,13 +58,12 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
   const padding = parsePadding(config);
   const animate = (config.animate === undefined) ? true : (!!config.animate);
   const iterations = config.iterations || 1;
-  const rtl = config.rtl ? 1 : 0;
   const o = getOptions(config.type, seed);
 
   switch (config.type) {
     case 'underline': {
       const y = rect.y + rect.h + padding[2];
-      for (let i = rtl; i < iterations + rtl; i++) {
+      for (let i = 0; i < iterations; i++) {
         if (i % 2) {
           opList.push(line(rect.x + rect.w, y, rect.x, y, o));
         } else {
