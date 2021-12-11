@@ -1,5 +1,4 @@
 import resolve from 'rollup-plugin-node-resolve';
-import replace from '@rollup/plugin-replace';
 import { terser } from "rollup-plugin-terser";
 import typescript from '@rollup/plugin-typescript';
 
@@ -14,11 +13,8 @@ export default [
     },
     plugins: [
       typescript(),
-      resolve({ browser: true }),
-      terser(),
-      replace({
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-      })
+      resolve(),
+      terser()
     ],
   },
   {
@@ -29,11 +25,8 @@ export default [
     },
     plugins: [
       typescript(),
-      resolve({ browser: true }),
-      terser(),
-      replace({
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-      })
+      resolve(),
+      terser()
     ]
   },
 ];

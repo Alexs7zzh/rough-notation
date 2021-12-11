@@ -2,7 +2,7 @@ import { Rect, RoughAnnotationConfig, RoughAnnotation, RoughAnnotationGroup, SVG
 import { renderAnnotation } from './render';
 import { ensureKeyframes } from './keyframes';
 import { randomSeed } from 'roughjs/bin/math';
-import { nanoid } from 'nanoid'
+import { uid } from 'uid';
 
 type AnnotationState = 'unattached' | 'not-showing' | 'showing';
 
@@ -179,7 +179,7 @@ class RoughAnnotationGroupImpl implements RoughAnnotationGroup {
   add(e: HTMLElement, config: RoughAnnotationConfig): string {
     const annotation = new RoughAnnotationImpl(e, config);
     annotation.show();
-    const id = nanoid()
+    const id = uid(16);
     this._annotations.set(id, annotation);
     return id;
   }
