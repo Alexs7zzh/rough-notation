@@ -1,15 +1,17 @@
 import { Rect, RoughAnnotationConfig, RoughAnnotation, RoughAnnotationGroup, SVG_NS, DEFAULT_ANIMATION_DURATION } from './model';
 import { renderAnnotation } from './render';
 import { ensureKeyframes } from './keyframes';
-import { randomSeed } from 'roughjs/bin/math';
 import { uid } from 'uid';
 
 type AnnotationState = 'unattached' | 'not-showing' | 'showing';
 
+function randomSeed() {
+  return Math.floor(Math.random() * 2 ** 31);
+}
+
 class RoughAnnotationImpl implements RoughAnnotation {
   private _state: AnnotationState = 'unattached';
   private _config: RoughAnnotationConfig;
-  private _seed = randomSeed();
 
   private _e: HTMLElement;
   private _svg?: SVGSVGElement;
@@ -125,7 +127,7 @@ class RoughAnnotationImpl implements RoughAnnotation {
     for (let i = 0; i < rects.length; i++) {
       const rect = rects[i];
       const ad = totalDuration * (rect.w / totalWidth);
-      renderAnnotation(svg, rects[i], config, delay, ad, this._seed);
+      renderAnnotation(svg, rects[i], config, delay, ad, randomSeed());
       delay += ad;
     }
     this._lastSizes = rects;
