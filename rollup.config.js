@@ -3,6 +3,17 @@ import { terser } from "rollup-plugin-terser";
 import typescript from '@rollup/plugin-typescript';
 
 const input = 'src/rough-notation.ts';
+const plugins = [
+  typescript(),
+  resolve(),
+  terser({
+    mangle: {
+      properties: {
+        regex: /^_/
+      }
+    }
+  })
+]
 
 export default [
   {
@@ -11,11 +22,7 @@ export default [
       file: 'lib/rough-notation.esm.js',
       format: 'esm'
     },
-    plugins: [
-      typescript(),
-      resolve(),
-      terser()
-    ],
+    plugins,
   },
   {
     input,
@@ -23,10 +30,6 @@ export default [
       file: 'lib/rough-notation.cjs.js',
       format: 'cjs'
     },
-    plugins: [
-      typescript(),
-      resolve(),
-      terser()
-    ]
+    plugins
   },
 ];
