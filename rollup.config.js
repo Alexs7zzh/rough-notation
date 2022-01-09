@@ -20,7 +20,8 @@ export default [
     input,
     output: {
       file: 'lib/rough-notation.esm.js',
-      format: 'esm'
+      format: 'esm',
+      exports: 'default'
     },
     plugins,
   },
@@ -28,7 +29,8 @@ export default [
     input,
     output: {
       file: 'lib/rough-notation.cjs.js',
-      format: 'cjs'
+      format: 'cjs',
+      exports: 'default'
     },
     plugins
   },

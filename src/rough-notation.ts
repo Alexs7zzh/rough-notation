@@ -106,13 +106,16 @@ class RoughAnnotationImpl implements RoughAnnotation {
     return false;
   }
 
+  private si(a: number, b: number): boolean {
+    return Math.round(a) === Math.round(b);
+  }
+
   private isSameRect(rect1: Rect, rect2: Rect): boolean {
-    const si = (a: number, b: number) => Math.round(a) === Math.round(b);
     return (
-      si(rect1.x, rect2.x) &&
-      si(rect1.y, rect2.y) &&
-      si(rect1.w, rect2.w) &&
-      si(rect1.h, rect2.h)
+      this.si(rect1.x, rect2.x) &&
+      this.si(rect1.y, rect2.y) &&
+      this.si(rect1.w, rect2.w) &&
+      this.si(rect1.h, rect2.h)
     );
   }
 
@@ -137,18 +140,28 @@ class RoughAnnotationImpl implements RoughAnnotation {
   }
 
   private rects(): Rect[] {
-    const ret: Rect[] = [];
+    const ret: Rect[] = []
+    let tmp = undefined
     if (this._svg) {
       const elementRects = this._e.getClientRects();
       for (let i = 0; i < elementRects.length; i++) {
-        ret.push(this.svgRect(this._svg, elementRects[i]));
+        const n = elementRects[i];
+        if (tmp === undefined)
+          tmp = n;
+        else if (this.si(n.left, tmp.right) && this.si(n.top, tmp.top))
+          tmp.width += n.width;
+        else {
+          ret.push(this.svgRect(tmp));
+          tmp = n;
+        }
       }
+      ret.push(this.svgRect(tmp!));
     }
     return ret;
   }
 
-  private svgRect(svg: SVGSVGElement, bounds: DOMRect | DOMRectReadOnly): Rect {
-    const rect1 = svg.getBoundingClientRect();
+  private svgRect(bounds: DOMRect | DOMRectReadOnly): Rect {
+    const rect1 = this._svg!.getBoundingClientRect();
     const rect2 = bounds;
     return {
       x: (rect2.x || rect2.left) - (rect1.x || rect1.left),
@@ -196,7 +209,7 @@ class RoughAnnotationGroupImpl implements RoughAnnotationGroup {
   }
 }
 
-export function main(): RoughAnnotationGroup {
+function main(): RoughAnnotationGroup {
   return new RoughAnnotationGroupImpl();
 }
 
