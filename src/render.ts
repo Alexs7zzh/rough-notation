@@ -93,14 +93,14 @@ function rectangle(x: number, y: number, width: number, height: number, o: Resol
     return ops;
 }
 
-export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAnnotationConfig, animationGroupDelay: number, animationDuration: number, seed: number) {
+export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAnnotationConfig, type: RoughAnnotationType, animationGroupDelay: number, animationDuration: number, seed: number) {
   const opList: OpSet[] = [];
   let strokeWidth = config.strokeWidth || 2;
   const padding = [5, 5, 5, 5];
   const animate = (config.animate === undefined) ? true : (!!config.animate);
-  const o = getOptions(config.type, seed);
+  const o = getOptions(type, seed);
 
-  switch (config.type) {
+  switch (type) {
     case 'underline': {
       const y = rect.y + rect.h + padding[2];
       opList.push({ type: 'path', ops: line(rect.x, y, rect.x + rect.w, y, o) });

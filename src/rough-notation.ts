@@ -1,4 +1,4 @@
-import { Rect, RoughAnnotationConfig, RoughAnnotation, RoughAnnotationGroup, SVG_NS, DEFAULT_ANIMATION_DURATION } from './model';
+import { Rect, RoughAnnotationConfig, RoughAnnotation, RoughAnnotationGroup, SVG_NS, DEFAULT_ANIMATION_DURATION, RoughAnnotationType } from './model';
 import { renderAnnotation } from './render';
 import { ensureKeyframes } from './keyframes';
 import { uid } from 'uid';
@@ -124,10 +124,12 @@ class RoughAnnotationImpl implements RoughAnnotation {
     rects.forEach((rect) => totalWidth += rect.w);
     const totalDuration = (config.animationDuration || DEFAULT_ANIMATION_DURATION);
     let delay = 0;
+    let type: RoughAnnotationType = 'underline'
+    if (rects.length === 1 && totalWidth < 140) type = 'box'
     for (let i = 0; i < rects.length; i++) {
       const rect = rects[i];
       const ad = totalDuration * (rect.w / totalWidth);
-      renderAnnotation(svg, rects[i], config, delay, ad, randomSeed());
+      renderAnnotation(svg, rects[i], config, type, delay, ad, randomSeed());
       delay += ad;
     }
     this._lastSizes = rects;

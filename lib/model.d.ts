@@ -8,7 +8,6 @@ export interface Rect {
 }
 export declare type RoughAnnotationType = 'underline' | 'box';
 export interface RoughAnnotationConfig extends RoughAnnotationConfigBase {
-    type: RoughAnnotationType;
     className?: string | undefined;
     commentId?: string | undefined;
     rootId?: string | undefined;
